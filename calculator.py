@@ -2,19 +2,31 @@ from tkinter import *
 import tkinter.font as font
 
 
+def button_click(num: str):
+    global expression
+    global top
+    num = str(num)
+    expression += num
+    top['text'] = expression
+
+    
 def init():
+    global expression
+    global top
     root = Tk()
     root.geometry('312x324')
     root.resizable(0, 0) #prevents resizing
     root.title('Calculator')
-    
-    myFont = font.Font(family='Times New Roman', font=10, weight='bold')
 
     canvas = Canvas(root, bg = 'white')
     canvas.pack()
     #frame for the string???
     frame = Frame(canvas, width = 312, height = 65, bg = 'dark grey', highlightbackground="black", highlightthickness=5)
     frame.pack(side=TOP)
+
+    #display
+    top = Label(frame, text = expression, width = 312, height= 3, fg = 'black')
+    top.pack()
 
     #frame for the buttons
     button_frame = Frame(canvas, width = 312, height = 274, bg = 'black', highlightbackground="black", highlightthickness=3)
@@ -36,7 +48,7 @@ def init():
     #end of row0
 
     #row 1
-    number_7 = Button(button_frame, text='7', bg = 'darkgrey', fg= 'white', pady=5, padx = 28, font=('bold'))
+    number_7 = Button(button_frame, text='7', bg = 'darkgrey', fg= 'white', pady=5, padx = 28, font=('bold'), command= lambda: button_click(7))
     number_7.grid(row=1, column=0, padx=0, pady=(3, 10))
 
     number_8 = Button(button_frame, text='8', bg = 'darkgrey', fg= 'white', pady=5, padx = 28, font=('bold'))
@@ -77,8 +89,22 @@ def init():
     add.grid(row=3, column=3, padx=(2, 0), pady=(2, 10))
     #end of row 2
 
+    #row 3
+    number_0 = Button(button_frame, text='0', bg = 'darkgrey', fg= 'white', pady=5, padx = 70, font=('bold'))
+    number_0.grid(row=4, column=0, padx=0, pady=(0, 3), columnspan=2)
+    
+
+    add = Button(button_frame, text='.', bg = 'darkgrey', fg= 'white', pady=5, padx = 30)
+    add.grid(row=4, column=2, padx=(2, 0), pady=(0, 3))
+
+    add = Button(button_frame, text='=', bg = 'orange', fg= 'white', pady=5, padx = 22)
+    add.grid(row=4, column=3, padx=(2, 0), pady=(0, 3))
+
+    #end of row 3
 
     root.mainloop()
+
+
 if __name__ == '__main__':
     expression = ''
     init()
